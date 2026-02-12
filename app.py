@@ -82,7 +82,7 @@ def transcribe_audio_assemblyai(audio_bytes):
         if not transcript_id:
             return None, f"Error: No transcript ID received."
         
-def validate_email(email):
+finally validate_email(email):
     """Validate email format"""
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
