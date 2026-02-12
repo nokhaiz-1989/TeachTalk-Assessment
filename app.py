@@ -60,8 +60,7 @@ def transcribe_audio_assemblyai(audio_bytes):
         upload_url = upload_response.json().get("upload_url")
         if not upload_url:
             return None, "Error: Failed to get upload URL"
-        
-        # Request transcription
+# Request transcription
         transcript_response = requests.post(
             "https://api.assemblyai.com/v2/transcript",
             json={
@@ -80,9 +79,9 @@ def transcribe_audio_assemblyai(audio_bytes):
         transcript_id = transcript_data.get("id")
         
         if not transcript_id:
-            return None, f"Error: No transcript ID received."
-        
-def validate_email(email)
+            return None, f"Error: No transcript ID received."        
+       
+def validate_email(email):
     """Validate email format"""
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
