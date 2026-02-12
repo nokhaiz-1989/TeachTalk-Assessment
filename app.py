@@ -1008,18 +1008,18 @@ def transcribe_audio_assemblyai(audio_bytes):
         if not upload_url:
             return None, "Error: Failed to get upload URL"
         
-        # Request transcription
-        transcript_response = requests.post(
-            "https://api.assemblyai.com/v2/transcript",
-            json={
-                "audio_url": upload_url,
-                "speech_model": "best",
-                "punctuate": True,
-                "format_text": True
-            },
-            headers=headers,
-            timeout=30
-        )
+# Request transcription
+transcript_response = requests.post(
+    "https://api.assemblyai.com/v2/transcript",
+    json={
+        "audio_url": upload_url,
+        "speech_models": ["best"],  # ✅ Fixed: now an array
+        "punctuate": True,
+        "format_text": True
+    },
+    headers=headers,
+    timeout=30
+)
         
         if transcript_response.status_code != 200:
             return None, f"Transcription request error: {transcript_response.text}"
