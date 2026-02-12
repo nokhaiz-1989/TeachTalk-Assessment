@@ -61,13 +61,13 @@ def transcribe_audio_assemblyai(audio_bytes):
         if not upload_url:
             return None, "Error: Failed to get upload URL"
     # Request transcription
-    transcript_response = requests.post(
-    "https://api.assemblyai.com/v2/transcript",
-    json={
-    "audio_url": upload_url,
-    "speech_models": ["universal-2"],
-    "punctuate": True,
-    "format_text": True
+        transcript_response = requests.post(
+        "https://api.assemblyai.com/v2/transcript",
+        json={
+        "audio_url": upload_url,
+        "speech_models": ["universal-2"],
+        "punctuate": True,
+        "format_text": True
             },
             headers=headers
         )
