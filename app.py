@@ -61,13 +61,13 @@ def transcribe_audio_assemblyai(audio_bytes):
         if not upload_url:
             return None, "Error: Failed to get upload URL"
 # Request transcription
-        transcript_response = requests.post(
-            "https://api.assemblyai.com/v2/transcript",
-            json={
-                "audio_url": upload_url,
-                "speech_models": ["universal-2"],
-                "punctuate": True,
-                "format_text": True
+    transcript_response = requests.post(
+    "https://api.assemblyai.com/v2/transcript",
+    json={
+    "audio_url": upload_url,
+    "speech_models": ["universal-2"],
+    "punctuate": True,
+    "format_text": True
             },
             headers=headers
         )
@@ -81,10 +81,10 @@ def transcribe_audio_assemblyai(audio_bytes):
         if not transcript_id:
             return None, f"Error: No transcript ID received."        
        
-def validate_email(email):
-    """Validate email format"""
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
+        def validate_email(email):
+        """Validate email format"""
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(pattern, email) is not None
 
 def generate_html_report(name, institution, email, component_scores, avg_scores, 
                         part1_scores, part2_scores, part3_score, total_score, 
