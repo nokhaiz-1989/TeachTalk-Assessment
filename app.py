@@ -1,3 +1,8 @@
+# Temporary debugging - remove after testing
+st.write("🔍 Debug Info:")
+st.write(f"Has ASSEMBLYAI_API_KEY: {bool(st.secrets.get('ASSEMBLYAI_API_KEY'))}")
+if st.secrets.get('ASSEMBLYAI_API_KEY'):
+    st.write(f"Key starts with: {st.secrets.get('ASSEMBLYAI_API_KEY')[:10]}...")
 import streamlit as st
 import tempfile
 import pandas as pd
