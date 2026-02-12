@@ -86,10 +86,10 @@ def transcribe_audio_assemblyai(audio_bytes):
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             return re.match(pattern, email) is not None
 
-def generate_html_report(name, institution, email, component_scores, avg_scores, 
+        def generate_html_report(name, institution, email, component_scores, avg_scores, 
                         part1_scores, part2_scores, part3_score, total_score, 
                         max_score, percentage, proficiency_level, strengths, improvements):
-    """Generate HTML email report"""
+            """Generate HTML email report"""
     
     # Determine color and emoji based on proficiency
     if percentage >= 90:
