@@ -34,13 +34,54 @@ with col2:
     head_teacher_email = st.text_input("Head Teacher Email (Optional)", placeholder="headteacher@example.com", 
                                        help="If provided, your head teacher will receive a copy of your report")
 
-def get_audio_hash(audio_bytes):
-    """Generate hash for audio file to detect changes"""
+def transcribe_audio_assemblyai(audio_bytes):
+    API_KEY = st.secrets.get("ASSEMBLYAI_API_KEY", "")
+    
+    if not API_KEY:
+        return None, "Error: API key not configured."
+    
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.webm', mode='wb') as tmp:
+        tmp.write(audio_bytes.getvalue())
+        tmp_path = tmp.name
+    
     try:
-        return hashlib.md5(audio_bytes.getvalue()).hexdigest()
-    except:
-        return None
-
+        headers = {"authorization": API_KEY}
+ # Upload audio
+        with open(tmp_path, "rb") as f:
+            upload_response = requests.post(
+                "https://api.assemblyai.com/v2/upload",
+                headers=headers,
+                data=f
+            )
+        
+        if upload_response.status_code != 200:
+            return None, f"Upload error: {upload_response.text}"
+        
+        upload_url = upload_response.json().get("upload_url")
+        if not upload_url:
+            return None, "Error: Failed to get upload URL"
+        
+        # Request transcription
+        transcript_response = requests.post(
+            "https://api.assemblyai.com/v2/transcript",
+            json={
+                "audio_url": upload_url,
+                "speech_models": ["universal-2"],
+                "punctuate": True,
+                "format_text": True
+            },
+            headers=headers
+        )
+        
+        if transcript_response.status_code != 200:
+            return None, f"Transcription request error: {transcript_response.text}"
+        
+        transcript_data = transcript_response.json()
+        transcript_id = transcript_data.get("id")
+        
+        if not transcript_id:
+            return None, f"Error: No transcript ID received."
+        
 def validate_email(email):
     """Validate email format"""
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
